@@ -28,7 +28,7 @@ public class GhostActivity extends AppCompatActivity {
 
     private Random random = new Random();
     private String stringFragment = "";
-
+    private String challengeString;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +67,7 @@ public class GhostActivity extends AppCompatActivity {
     }
 
     private void challengeComputer() {
-        String challengeString;
+
         challengeString = dictionary.getAnyWordStartingWith(stringFragment);
 
 
@@ -75,14 +75,9 @@ public class GhostActivity extends AppCompatActivity {
             challengeString = stringFragment + " is a valid word!";
             tvGhostText.setText(challengeString);
             tvGameStatus.setText("Player wins!");
-        }
-
-        else {
+        } else {
             tvGameStatus.setText("Computer wins!" + "\n" + "The suitable word can be: " + challengeString);
-
         }
-
-
     }
 
     @Override
@@ -125,6 +120,28 @@ public class GhostActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("stringFragment", stringFragment);
+        outState.putBoolean("userTurn", userTurn);
+        outState.putString("challengeString",challengeString);
+        outState.putString("tvGhostText", tvGhostText.getText().toString());
+        outState.putString("tvGameStatus", tvGameStatus.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        stringFragment = savedInstanceState.getString("stringFragment");
+        userTurn = savedInstanceState.getBoolean("userTurn");
+        tvGhostText.setText(savedInstanceState.getString("tvGhostText"));
+        tvGameStatus.setText(savedInstanceState.getString("tvGameStatus"));
+        challengeString = savedInstanceState.getString("challengeString");
     }
 
     /**

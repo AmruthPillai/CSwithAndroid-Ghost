@@ -67,6 +67,21 @@ public class GhostActivity extends AppCompatActivity {
     }
 
     private void challengeComputer() {
+        String challengeString;
+        challengeString = dictionary.getAnyWordStartingWith(stringFragment);
+
+
+        if (stringFragment.length() >= 4 && dictionary.isWord(stringFragment)) {
+            challengeString = stringFragment + " is a valid word!";
+            tvGhostText.setText(challengeString);
+            tvGameStatus.setText("Player wins!");
+        }
+
+        else {
+            tvGameStatus.setText("Computer wins!" + "\n" + "The suitable word can be: " + challengeString);
+
+        }
+
 
     }
 
@@ -163,12 +178,9 @@ public class GhostActivity extends AppCompatActivity {
             computerString = "A valid word cannot be formed with " + stringFragment;
             tvGhostText.setText(computerString);
             tvGameStatus.setText("Computer Wins!");
-            return;
-        }
-
-        if (stringFragment != null) {
-            char randChar = (char) (random.nextInt(26) + 97);
-            stringFragment += randChar;
+        } else {
+            char nextChar = computerString.charAt(stringFragment.length());
+            stringFragment += nextChar;
             tvGhostText.setText(stringFragment);
 
             userTurn = true;

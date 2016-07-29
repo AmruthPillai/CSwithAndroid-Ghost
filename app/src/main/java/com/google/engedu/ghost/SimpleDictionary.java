@@ -31,17 +31,20 @@ public class SimpleDictionary implements GhostDictionary {
             int random = (int) (Math.random() * words.size());
             return words.get(random);
         } else {
-            int start = 0;
-            int end = words.size() - 1;
-
-            while(start <= end) {
-                int mid = (start+end)/2;
-                if (words.get(mid).substring(0, prefix.length()).equals(prefix))
-                    return words.get(mid);
-                else if (words.get(mid).compareTo(prefix) <= 0) {
-                    start = mid + 1;
-                } else {
-                    end = mid - 1;
+            String dictionaryWord;
+            int low=0;
+            int high=words.size()-1;
+            while(high>=low){
+                int middle=(high+low)/2;
+                dictionaryWord=words.get(middle);
+                if(dictionaryWord.startsWith(prefix)){
+                    return dictionaryWord;
+                }
+                if (dictionaryWord.compareTo(prefix)<0){
+                    low=middle+1;
+                }
+                else{
+                    high=middle-1;
                 }
             }
         }
